@@ -159,36 +159,6 @@ It is now time to implement our custom logic and wire our module up to the bank 
 		```
 		- Modify the `UpdateDenom()` function like so:
 		```
-		func (k msgServer) CreateDenom(goCtx context.Context, msg *types.MsgCreateDenom) (*types.MsgCreateDenomResponse, error) {
-			ctx := sdk.UnwrapSDKContext(goCtx)
-
-			// Check if the value already exists
-			_, isFound := k.GetDenom(
-				ctx,
-				msg.Denom,
-			)
-			if isFound {
-				return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Denom already exists")
-			}
-			var denom = types.Denom{
-				Owner:              msg.Owner,
-				Denom:              msg.Denom,
-				Description:        msg.Description,
-				Ticker:             msg.Ticker,
-				Precision:          msg.Precision,
-				Url:                msg.Url,
-				MaxSupply:          msg.MaxSupply,
-				Supply:             0,
-				CanChangeMaxSupply: msg.CanChangeMaxSupply,
-			}
-
-			k.SetDenom(
-				ctx,
-				denom,
-			)
-			return &types.MsgCreateDenomResponse{}, nil
-		}
-		```
 		func (k msgServer) UpdateDenom(goCtx context.Context, msg *types.MsgUpdateDenom) (*types.MsgUpdateDenomResponse, error) {
 			ctx := sdk.UnwrapSDKContext(goCtx)
 
